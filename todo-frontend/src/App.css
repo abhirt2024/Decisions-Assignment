@@ -1,0 +1,135 @@
+/* --- CSS Variables for a Modern Dark Theme --- */
+:root {
+  --bg-color: #121212;       /* Deep dark background */
+  --surface: #1e1e1e;        /* Slightly lighter for cards and inputs */
+  --text-color: #e0e0e0;     /* Light gray text for readability */
+  --text-muted: #9e9e9e;     /* Dimmed text for descriptions */
+  --primary: #6366f1;        /* Vibrant Indigo (pops beautifully on dark backgrounds) */
+  --primary-hover: #4f46e5;
+  --danger: #ef4444;         /* Softer red optimized for dark mode */
+  --danger-hover: #dc2626;
+  --border: #333333;         /* Subtle dark borders */
+}
+
+/* --- Global Body Styling --- */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Typography --- */
+h1 {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+/* --- Form Inputs & Selects --- */
+input, select {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: var(--surface);
+  color: var(--text-color); /* THIS FIXES THE INVISIBLE DROPDOWN TEXT */
+  transition: border-color 0.2s, box-shadow 0.2s;
+  flex: 1; 
+  min-width: 150px;
+}
+
+/* Ensures dropdown options are legible across all browsers */
+option {
+  background-color: var(--surface);
+  color: var(--text-color);
+}
+
+input:focus, select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); 
+}
+
+/* --- Standard Buttons --- */
+button {
+  padding: 10px 16px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:active {
+  transform: scale(0.97); 
+}
+
+/* --- Filter Buttons (View All, View Work, View Personal) --- */
+div > button:not([style*="color: red"]) {
+  background-color: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border);
+}
+
+div > button:hover:not([style*="color: red"]) {
+  background-color: #2a2a2a; 
+}
+
+div > button[style*="font-weight: bold"] {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+/* --- Delete Button Override --- */
+button[style*="color: red"] {
+  background-color: transparent;
+  color: var(--danger) !important;
+  border: 1px solid var(--danger);
+}
+
+button[style*="color: red"]:hover {
+  background-color: var(--danger);
+  color: #ffffff !important;
+}
+
+/* --- Todo List Items (Cards) --- */
+li {
+  background-color: var(--surface);
+  border: 1px solid var(--border) !important; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Darker shadow for depth */
+  transition: all 0.3s ease;
+}
+
+li:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+li h3 {
+  color: var(--text-color);
+}
+
+li p {
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+li small {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: rgba(99, 102, 241, 0.1); /* Subtle primary tint background */
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  color: var(--primary);
+}
