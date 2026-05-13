@@ -17,10 +17,10 @@ The backend uses a lightweight SQLite database that will automatically create it
 ## How to Run the Frontend
 Open a new terminal window and navigate to the React frontend folder (e.g., cd todo-frontend).
 Install the necessary dependencies:
-npm install
+`npm install`
 
 Start the development server:
-npm run dev
+`npm run dev`
 
 *The UI will be accessible at `http://localhost:5173`. Ensure the backend is running simultaneously.*
 
