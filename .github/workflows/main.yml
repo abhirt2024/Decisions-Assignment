@@ -1,0 +1,34 @@
+name: .NET Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Pulls your code onto the runner
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Installs the .NET SDK
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # Change this if you are using .NET 6 or 7
+
+    # 3. Restores NuGet packages
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # 4. Builds the project
+    - name: Build project
+      run: dotnet build --no-restore
+
+    # 5. Runs any unit tests
+    - name: Run tests
+      run: dotnet test --no-build --verbosity normal
