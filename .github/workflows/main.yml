@@ -1,4 +1,4 @@
-name: .NET Build and Test
+name: Full Stack Build and Test
 
 on:
   push:
@@ -7,31 +7,50 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  # ----------------------------------------
+  # 1. BACKEND JOB (.NET)
+  # ----------------------------------------
+  build-backend:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./todo-backend
 
     steps:
-    # 1. Pulls your code onto the runner
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. Installs the .NET SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x' # Change this if you are using .NET 6 or 7
+        dotnet-version: '8.0.x' 
 
-    # 3. Restores NuGet packages
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Restore, Build, and Test
+      run: |
+        dotnet restore
+        dotnet build --no-restore
+        dotnet test --no-build --verbosity normal
 
-    # 4. Builds the project
-    - name: Build project
-      run: dotnet build --no-restore
+  # ----------------------------------------
+  # 2. FRONTEND JOB (React)
+  # ----------------------------------------
+  build-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./todo-frontend # Make sure this matches your React folder name
 
-    # 5. Runs any unit tests
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Standard for modern React apps
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build React app
+      run: npm run build
