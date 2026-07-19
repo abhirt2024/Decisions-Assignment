@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    # Replace 'your_docker_username' with your actual Docker Hub username
+    image: abhirt/todo-backend-api:latest
+    container_name: local-todo-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  frontend:
+    # Replace 'your_docker_username' with your actual Docker Hub username
+    image: abhirt/todo-frontend-app:latest
+    container_name: local-todo-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
