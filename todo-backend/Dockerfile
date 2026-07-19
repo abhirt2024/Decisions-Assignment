@@ -4,12 +4,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project file and restore dependencies
-COPY ["TodoApp.csproj", "./"]
-RUN dotnet restore "TodoApp.csproj"
+COPY ["TodoApp.sln", "./"]
+RUN dotnet restore "TodoApp.sln"
 
 # Copy the rest of the code and build the release
 COPY . .
-RUN dotnet publish "TodoApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "TodoApp.sln" -c Release -o /app/publish /p:UseAppHost=false
 
 # Stage 2: Runtime
 # Use the much smaller ASP.NET runtime image for the final container
