@@ -1,18 +1,24 @@
 # Stage 1: Build and Publish
-# Use the SDK image to build the app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy the project file and restore dependencies
+# 1. Copy the solution file first
 COPY ["TodoApp.sln", "./"]
+
+# 2. Copy the project file into its correct subfolder
+COPY ["TodoApp/TodoApp.csproj", "TodoApp/"]
+
+# 3. Now restore dependencies
 RUN dotnet restore "TodoApp.sln"
 
-# Copy the rest of the code and build the release
+# 4. Copy the rest of the source code
 COPY . .
-RUN dotnet publish "TodoApp.sln" -c Release -o /app/publish /p:UseAppHost=false
+
+# 5. Move into the project folder to publish
+WORKDIR "/src/TodoApp"
+RUN dotnet publish "TodoApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Stage 2: Runtime
-# Use the much smaller ASP.NET runtime image for the final container
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 EXPOSE 8080
